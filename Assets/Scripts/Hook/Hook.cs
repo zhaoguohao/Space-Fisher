@@ -6,7 +6,6 @@ using DG.Tweening;
 public class Hook : MonoBehaviour
 {
     //public Transform hookedTransform;
-    private Vector3 _mainCameraPosition;
     private Camera mainCamera;
     private int length;
     //private int strength;
@@ -22,9 +21,7 @@ public class Hook : MonoBehaviour
     void Awake()
     {
         mainCamera = Camera.main;
-        coll = GetComponent<CircleCollider2D>();
-        _mainCameraPosition = mainCamera.transform.position;
-        
+        coll = GetComponent<CircleCollider2D>(); 
     }
 
     void Update()
@@ -49,15 +46,23 @@ public class Hook : MonoBehaviour
         float time = (-length) * 0.1f;
         cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate // Camera movement on Y-axis DOWN with DOTween animation
         {
-            if (_mainCameraPosition.y <= -11)
+            if (mainCamera.transform.position.y <= -11)
+            {
+                //Debug.Log("I'm working");
                 transform.SetParent(mainCamera.transform); // Assigning a parent
+            }
+                
         }).OnComplete(delegate
         {
             coll.enabled = true; // Hook is visible
             cameraTween = mainCamera.transform.DOMoveY(0, time * 5, false).OnUpdate(delegate // Camera movement on Y-axis UP with DOTween animation
             {
-                if (_mainCameraPosition.y >= -25f)
+                if (mainCamera.transform.position.y >= -25f)
+                {
+                    //Debug.Log("I'm working");
                     StopFishing();
+                }
+                    
             });
         });
 
@@ -70,6 +75,23 @@ public class Hook : MonoBehaviour
 
     void StopFishing()
     {
-
+        canMove = false;
+        cameraTween.Kill(false);
+        cameraTween = mainCamera.transform.DOMoveY(0, 2, false).OnUpdate(delegate
+        {
+            if (mainCamera.transform.position.y >= -11)
+            {
+                transform.SetParent(null);
+                transform.position = new Vector2(transform.position.x, -6);
+            }
+        }).OnComplete(delegate
+        {
+            transform.position = Vector2.down * 6;
+            coll.enabled = true;
+            int num = 0;
+            // Clearing out the hook from the fishes
+            // IdleManager Totalgain = num
+            // Sceenmanager End Screen
+        });
     }
 }
