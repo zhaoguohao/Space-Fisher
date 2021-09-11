@@ -1,30 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
 public class Hook : MonoBehaviour
 {
+    //public Transform hookedTransform;
+    private Vector3 _mainCameraPosition;
+    private Camera mainCamera;
+    private int length;
+    //private int strength;
+    //private int fishCount;
 
-public Transform hookedTransform;
-private Camera mainCamera;
-private int length;
-private int strength;
-private int fishCount;
-
-private Collider2D coll;
-private bool canMove = true;
-
-
-private Tweener cameraTween;
-
-void Awake()
-{
-    mainCamera = Camera.main;
-    coll = GetComponent<Collider2D>();
-}
+    private CircleCollider2D coll;
+    private bool canMove = false;
 
 
-    void Start()
+    private Tweener cameraTween;
+
+
+    void Awake()
     {
+        mainCamera = Camera.main;
+        coll = GetComponent<CircleCollider2D>();
+        _mainCameraPosition = mainCamera.transform.position;
         
     }
 
@@ -44,23 +43,22 @@ void Awake()
 
     public void StartFishing()
     {
-        length = 50; // IdleManager
-        strength = 3; // IdleManager
-        fishCount = 0;
+        length = -50; // IdleManager
+        //strength = 3; // IdleManager
+        //fishCount = 0;
         float time = (-length) * 0.1f;
-        cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate
+        cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate // Camera movement on Y-axis DOWN with DOTween animation
         {
-            if (mainCamera.transform.position.y <= -11)
-                transform.SetParent(mainCamera.transform);
+            if (_mainCameraPosition.y <= -11)
+                transform.SetParent(mainCamera.transform); // Assigning a parent
         }).OnComplete(delegate
         {
-            coll.enabled = true;
-            cameraTween = mainCamera.transform.DOMoveY(0, time * 5, false).OnUpdate(delegate
+            coll.enabled = true; // Hook is visible
+            cameraTween = mainCamera.transform.DOMoveY(0, time * 5, false).OnUpdate(delegate // Camera movement on Y-axis UP with DOTween animation
             {
-                if (mainCamera.transform.position.y >= -25f)
+                if (_mainCameraPosition.y >= -25f)
                     StopFishing();
             });
-            // I've question about that;
         });
 
         // Screen(GAME)
