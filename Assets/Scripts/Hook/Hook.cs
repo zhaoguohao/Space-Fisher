@@ -111,6 +111,7 @@ public class Hook : MonoBehaviour
         {
             fishCount++;
             Fish component = target.GetComponent<Fish>();
+            component.Hooked();
             hookedFishes.Add(component);
             target.transform.SetParent(transform);
             target.transform.position = hookedTransform.position;

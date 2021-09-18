@@ -18,6 +18,6 @@ public class FishSpawner : MonoBehaviour
         }
     }
 
-    [SerializeField] private FishSpawner fishPrefab;
+    [SerializeField] private Fish fishPrefab;
     [SerializeField] private Fish.FishType[] fishTypes;
 }

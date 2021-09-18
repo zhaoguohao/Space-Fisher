@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8713453743418747731}
   - component: {fileID: 5506126347490619274}
+  - component: {fileID: 4502734876604670030}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Fish
@@ -44,6 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5bb1d59fb5f9e4ab7fbc901c686b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &4502734876604670030
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713453743418747730}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.3
 --- !u!1 &8713453745307651871
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,7 +71,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8713453745307651864}
   - component: {fileID: 8713453745307651866}
-  - component: {fileID: 8713453745307651865}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -127,19 +143,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &8713453745307651865
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8713453745307651871}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.56
