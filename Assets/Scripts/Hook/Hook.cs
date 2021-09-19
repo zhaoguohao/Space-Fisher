@@ -61,7 +61,6 @@ public class Hook : MonoBehaviour
             {
                 if (mainCamera.transform.position.y >= -25f)
                 {
-                    //Debug.Log("I'm working");
                     StopFishing();
                 }
                     
@@ -90,20 +89,25 @@ public class Hook : MonoBehaviour
         {
             transform.position = Vector2.down * 6;
             coll.enabled = true;
-            int num = 0;
-
-            //New lines of script!!!
-            for(int i = 0; i < hookedFishes.Count; i++) // Clearing out the hook from the fishes
-            {
-                hookedFishes[i].transform.SetParent(null);
-                hookedFishes[i].ResetFish();
-                num += hookedFishes[i].Type.price;
-            }
+            HookClearing();
             
             // IdleManager Totalgain = num
             // Sceenmanager End Screen
         });
     }
+
+    void HookClearing() // Clearing out the hook from the fishes
+    {
+        int salary = 0;
+        for (int i = 0; i < hookedFishes.Count; i++) 
+        {
+            hookedFishes[i].transform.SetParent(null);
+            hookedFishes[i].ResetFish();
+            salary += hookedFishes[i].Type.price;
+        }
+    }
+
+
 
     private void OnTriggerEnter2D(Collider2D target) 
     {
