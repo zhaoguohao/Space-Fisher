@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class Fish : MonoBehaviour
 {
-    [Serializable]
+    [Serializable] // great for classes that simply store information in themselves.
     public class FishType
     {
         public int price;
@@ -17,7 +17,7 @@ public class Fish : MonoBehaviour
         public Sprite sprite;
     }
 
-    private Fish.FishType type;
+    private Fish.FishType type; // Our fish type.
     private CircleCollider2D coll;
     private SpriteRenderer rend;
     private float screenLeft;
@@ -30,17 +30,17 @@ public class Fish : MonoBehaviour
     void Awake()
     {
         coll = GetComponent<CircleCollider2D>();
-        rend = GetComponentInChildren<SpriteRenderer>();
+        rend = GetComponentInChildren<SpriteRenderer>(); // Method take spriteRenderer from fish child.
         screenLeft = Camera.main.ScreenToWorldPoint(Vector3.zero).x;
     }
 
-    public void ResetFish()
+    public void ResetFish() 
     {
-        if (tweener != null)
+        if (tweener != null) // if animation is active line of code destroy it. 
             tweener.Kill(false);
 
         float num = UnityEngine.Random.Range(type.minLength, type.maxLength);
-        coll.enabled = true;
+        coll.enabled = true; // collider switched on
         Vector3 position = transform.position;
         position.y = num;
         position.x = screenLeft;
