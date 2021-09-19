@@ -42,9 +42,10 @@ public class Fish : MonoBehaviour
         float num = UnityEngine.Random.Range(type.minLength, type.maxLength);
         coll.enabled = true; // collider switched on
         Vector3 position = transform.position;
+        //Debug.Log("position: " + transform.position);
         position.y = num;
-        position.x = screenLeft;
-        transform.position = position;
+        position.x = screenLeft; // 0
+        transform.position = position; // (0, Random.Range(), 0).
 
         float num2 = 1;
         float y = UnityEngine.Random.Range(num - num2, num + num2);

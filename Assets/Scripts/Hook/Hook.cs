@@ -43,7 +43,7 @@ public class Hook : MonoBehaviour
     public void StartFishing()
     {
         length = -50; // IdleManager
-        strength = 3; // IdleManager
+        strength = 3; // number of fishes on Hook.
         fishCount = 0;
         float time = (-length) * 0.1f;
         cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate // Camera movement on Y-axis DOWN with DOTween animation
@@ -105,23 +105,23 @@ public class Hook : MonoBehaviour
         });
     }
 
-    private void OnTriggerEnter2D(Collider2D target) // New lines of script!!!
+    private void OnTriggerEnter2D(Collider2D target) 
     {
         if(target.CompareTag("Fish") && fishCount != strength)
         {
             fishCount++;
             Fish component = target.GetComponent<Fish>();
-            component.Hooked();
+            component.Hooked(); // collider - off, animation - off
             hookedFishes.Add(component);
-            target.transform.SetParent(transform);
-            target.transform.position = hookedTransform.position;
+            target.transform.SetParent(transform); // for hooked fishes new parent is a hook. So rotation and position will be equal with hookedTransform.
+            target.transform.position = hookedTransform.position; 
             target.transform.rotation = hookedTransform.rotation;
-            target.transform.localScale = Vector3.one;
+            target.transform.localScale = Vector3.one; // (1,1,1)
 
             target.transform.DOShakeRotation(5, Vector3.forward * 45, 10, 90, false).SetLoops(1, LoopType.Yoyo).OnComplete(delegate
             {
                 target.transform.rotation = Quaternion.identity;//(0,0,0)
-            });
+            }); // Fish will be shake after hooking and when animation swithed off fish will have (0,0,0) rotation data.
             if (fishCount == strength)
                 StopFishing();
         }
