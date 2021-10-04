@@ -39,7 +39,7 @@ public class IdleManager : MonoBehaviour
     {
         if(paused)
         {
-            DateTime now = DataTime.Now;
+            DateTime now = DateTime.Now;
             PlayerPrefs.SetString("Date", string.Empty);
             MonoBehaviour.print(now.ToString());
         }
