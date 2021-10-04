@@ -42,8 +42,8 @@ public class Hook : MonoBehaviour
 
     public void StartFishing()
     {
-        length = -50; // IdleManager
-        strength = 3; // number of fishes on Hook.
+        length = IdleManager.instance.length - 20;
+        strength = IdleManager.instance.strength;
         fishCount = 0;
         float time = (-length) * 0.1f;
         cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate // Camera movement on Y-axis DOWN with DOTween animation
@@ -68,6 +68,7 @@ public class Hook : MonoBehaviour
         });
 
         // Screen(GAME)
+        ScreensManager.instance.ChangeScreen(Screens.GAME);
         coll.enabled = false;
         canMove = true;
         //Clear
@@ -90,8 +91,6 @@ public class Hook : MonoBehaviour
             transform.position = Vector2.down * 6;
             coll.enabled = true;
             HookClearing();
-            
-            // IdleManager Totalgain = num
             // Sceenmanager End Screen
         });
     }
@@ -105,6 +104,8 @@ public class Hook : MonoBehaviour
             hookedFishes[i].ResetFish();
             salary += hookedFishes[i].Type.price;
         }
+        IdleManager.instance.totalGain = salary;
+        ScreensManager.instance.ChangeScreen(Screens.END);
     }
 
 
