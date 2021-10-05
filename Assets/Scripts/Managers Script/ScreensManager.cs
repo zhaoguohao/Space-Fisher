@@ -1,10 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/* ScreensManager workes with UI elements: Text, Buttons and GameObjects from IdleButtons. 
+ * Script can checking the availability of money for a purchase and update information on the screen.
+ * 
+ * Script created by @Mykola Kalchuk.
+ */
+
+
 public class ScreensManager : MonoBehaviour
 {
     
-    public static ScreensManager instance { get; private set; } // singleton
+    public static ScreensManager instance { get; private set; } // Singleton
     private GameObject _currentScreen;
 
     [Header("Game screens from UI elements: ")]
@@ -22,12 +29,15 @@ public class ScreensManager : MonoBehaviour
     public Text gameScreenMoney;
     public Text endScreenMoney;
     public Text returnScreenMoney;
+
     [Header("Length:")]
     public Text lengthCostText;
     public Text lengthValueText;
+
     [Header("Strength:")]
     public Text strengthCostText;
     public Text strengthValueText;
+
     [Header("Offline:")]
     public Text offlineCostText;
     public Text offlineValueText;
@@ -36,45 +46,46 @@ public class ScreensManager : MonoBehaviour
     private int gameCount;
 
 
-    private void Awake() // Singleton. Awake workes for the situation where in editor will created 2 objects with ScreensManager. In editor can be only 1 object with this script.
+    private void Awake()
     {
-        if (ScreensManager.instance)
+        if (ScreensManager.instance) // insurance in case of creation of 2 elements with ScreensManager.
             Destroy(base.gameObject);
         else
         {
             ScreensManager.instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-            
-
         _currentScreen = mainScreen;
     }
 
-    void Start()
+    private void Start()
     {
         CheckIdles();
         UpdateTexts();
     }
 
-    public void CheckIdles()
+    /// <summary>
+    /// Ñhecking the availability of money for a purchase
+    /// </summary>
+    private void CheckIdles()
     {
         int lengthCost = IdleManager.instance.lengthCost;
         int strengthCost = IdleManager.instance.strengthCost;
         int offlineEarningsCost = IdleManager.instance.offlineEarningsCost;
         int wallet = IdleManager.instance.wallet;
 
+        // interactable - button can't be use.
+
         if (wallet < lengthCost)
-            lengthButton.interactable = false; // button can not be use no more
+            lengthButton.interactable = false;
         else
             lengthButton.interactable = true;
-
         if (wallet < strengthCost)
-            strengthButton.interactable = false; // button can not be use no more
+            strengthButton.interactable = false;
         else
             strengthButton.interactable = true;
-
         if (wallet < offlineEarningsCost)
-            offlineButton.interactable = false; // button can not be use no more
+            offlineButton.interactable = false;
         else
             offlineButton.interactable = true;
     }
@@ -88,18 +99,16 @@ public class ScreensManager : MonoBehaviour
         strengthValueText.text = "$" + IdleManager.instance.strength + "fishes";
         offlineCostText.text = "$" + IdleManager.instance.offlineEarningsCost;
         offlineValueText.text = "$" + IdleManager.instance.offlineEarnings + "/min";
-
     }
 
-    public void SetEndScreenMoney()
+    private void SetEndScreenMoney()
     {
         endScreenMoney.text = "$" + IdleManager.instance.totalGain;
     }
 
-    public void SetReturnScreenMoney()
+    private void SetReturnScreenMoney()
     {
         returnScreenMoney.text = "$" + IdleManager.instance.totalGain + "gained while waiting!";
-
     }
 
     public void ChangeScreen(Screens screen)
@@ -112,22 +121,18 @@ public class ScreensManager : MonoBehaviour
                 UpdateTexts();
                 CheckIdles();
                 break;
-
             case Screens.GAME:
                 _currentScreen = gameScreen;
                 gameCount++;
                 break;
-
             case Screens.END:
                 _currentScreen = endScreen;
                 SetEndScreenMoney();
                 break;
-
             case Screens.RETURN:
                 _currentScreen = returnScreen;
                 SetReturnScreenMoney();
                 break;
-
         }
         _currentScreen.SetActive(true);
     }

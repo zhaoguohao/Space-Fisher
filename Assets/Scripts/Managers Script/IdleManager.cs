@@ -14,7 +14,6 @@ public class IdleManager : MonoBehaviour
     [HideInInspector] public int wallet;
     [HideInInspector] public int totalGain;
 
-
     private int[] costs = new int[] { 120, 151, 197, 250, 324, 414, 537, 687, 892, 1145, 1484, 1911, 2479, 3196, 4148, 5359, 6954, 9000, 11687 };
 
     public static IdleManager instance;
