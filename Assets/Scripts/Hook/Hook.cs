@@ -34,9 +34,6 @@ public class Hook : MonoBehaviour
             Vector3 position = transform.position; // Hook position
             position.x = vector.x; // change the position of the object along the X axis to the position by clicking on the screen
             transform.position = position;
-
-            //Debug.Log("Vector X-axis: " + vector.x); Debug.Log("Vector Y-axis: " + vector.y);
-            //Debug.Log("position Name:" + gameObject.name);
         }
     }
 
@@ -46,13 +43,12 @@ public class Hook : MonoBehaviour
         strength = IdleManager.instance.strength;
         fishCount = 0;
         float time = (-length) * 0.1f;
+
+
         cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate // Camera movement on Y-axis DOWN with DOTween animation
         {
             if (mainCamera.transform.position.y <= -11)
-            {
-                //Debug.Log("I'm working");
                 transform.SetParent(mainCamera.transform); // Assigning a parent
-            }
                 
         }).OnComplete(delegate
         {
@@ -60,18 +56,14 @@ public class Hook : MonoBehaviour
             cameraTween = mainCamera.transform.DOMoveY(0, time * 5, false).OnUpdate(delegate // Camera movement on Y-axis UP with DOTween animation
             {
                 if (mainCamera.transform.position.y >= -25f)
-                {
                     StopFishing();
-                }
                     
             });
         });
 
-        // Screen(GAME)
         ScreensManager.instance.ChangeScreen(Screens.GAME);
         coll.enabled = false;
         canMove = true;
-        //Clear
 
     }
 
@@ -94,6 +86,7 @@ public class Hook : MonoBehaviour
             // Sceenmanager End Screen
         });
     }
+
 
     void HookClearing() // Clearing out the hook from the fishes
     {
