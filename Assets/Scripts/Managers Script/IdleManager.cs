@@ -1,16 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+
+/* IdleManager workes with buttons from MAIN and RETURN sceens
+ * 
+ * Script created by @Mykola Kalchuk.
+ */
 
 public class IdleManager : MonoBehaviour
 {
     [HideInInspector] public int length;
-    [HideInInspector] public int strength;
-    [HideInInspector] public int offlineEarnings;
     [HideInInspector] public int lengthCost;
+
+    [HideInInspector] public int strength;
     [HideInInspector] public int strengthCost;
+
+    [HideInInspector] public int offlineEarnings;
     [HideInInspector] public int offlineEarningsCost;
+
     [HideInInspector] public int wallet;
     [HideInInspector] public int totalGain;
 
@@ -18,29 +25,34 @@ public class IdleManager : MonoBehaviour
 
     public static IdleManager instance;
 
-    void Awake()
+    private void Awake()
     {
         if (IdleManager.instance)
             UnityEngine.Object.Destroy(gameObject);
         else
             IdleManager.instance = this;
 
+        //PlayerPrefs.DeleteAll();
+
+        // Saved information getting:
         length = -PlayerPrefs.GetInt("Length", 30);
         strength = PlayerPrefs.GetInt("Strength", 3);
         offlineEarnings = PlayerPrefs.GetInt("Offline", 3);
+        wallet = PlayerPrefs.GetInt("Wallet", 0);
+
         lengthCost = costs[-length / 10 - 3];
         strengthCost = costs[strength - 3];
         offlineEarningsCost = costs[offlineEarnings - 3];
-        wallet = PlayerPrefs.GetInt("Wallet", 0);
+
     }
 
     private void OnApplicationPause(bool paused)
     {
         if(paused)
         {
-            DateTime now = DateTime.Now;
-            PlayerPrefs.SetString("Date", now.ToString());
-            MonoBehaviour.print(now.ToString());
+            DateTime now = DateTime.Now; // .NET System time;
+            PlayerPrefs.SetString("Date", now.ToString()); // System time saving;
+            //MonoBehaviour.print(now.ToString());
         }
         else
         {
@@ -50,7 +62,7 @@ public class IdleManager : MonoBehaviour
                 DateTime d = DateTime.Parse(@string);
                 totalGain = (int)((DateTime.Now - d).TotalMinutes * offlineEarnings + 1.0);
                 ScreensManager.instance.ChangeScreen(Screens.RETURN);
-                print(totalGain);
+                //print("Total Gain: " + totalGain);
             }
         }
     }
@@ -60,7 +72,7 @@ public class IdleManager : MonoBehaviour
         OnApplicationPause(true);
     }
 
-    public void BuyLength()
+    public void BuyLength() // Length Button
     {
         length -= 10;
         wallet -= lengthCost;
@@ -70,7 +82,7 @@ public class IdleManager : MonoBehaviour
         ScreensManager.instance.ChangeScreen(Screens.MAIN);
     }
 
-    public void BuyStrength()
+    public void BuyStrength() // Strength Button
     {
         strength++;
         wallet -= strengthCost;
@@ -80,7 +92,7 @@ public class IdleManager : MonoBehaviour
         ScreensManager.instance.ChangeScreen(Screens.MAIN);
     }
 
-    public void BuyOfflineEarnings()
+    public void BuyOfflineEarnings() // OfflineEarnings Button
     {
         offlineEarnings++;
         wallet -= offlineEarningsCost;

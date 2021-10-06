@@ -2548,10 +2548,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   length: 0
-  strength: 0
-  offlineEarnings: 0
   lengthCost: 0
+  strength: 0
   strengthCost: 0
+  offlineEarnings: 0
   offlineEarningsCost: 0
   wallet: 0
   totalGain: 0
@@ -2575,14 +2575,14 @@ MonoBehaviour:
   strengthButton: {fileID: 937713299}
   offlineButton: {fileID: 1200950133}
   gameScreenMoney: {fileID: 938400111}
+  endScreenMoney: {fileID: 154562708}
+  returnScreenMoney: {fileID: 1084054377}
   lengthCostText: {fileID: 1872608290}
   lengthValueText: {fileID: 1754785039}
   strengthCostText: {fileID: 613594066}
   strengthValueText: {fileID: 1631605732}
   offlineCostText: {fileID: 1718097105}
   offlineValueText: {fileID: 1112012709}
-  endScreenMoney: {fileID: 154562708}
-  returnScreenMoney: {fileID: 1084054377}
 --- !u!1 &1631605730
 GameObject:
   m_ObjectHideFlags: 0

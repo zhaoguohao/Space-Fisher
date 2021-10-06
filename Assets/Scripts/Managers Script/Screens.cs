@@ -1,3 +1,10 @@
+
+/*
+ * Script created by @Mykola Kalchuk.
+ */
+
+
+
 public enum Screens
 {
     MAIN,
